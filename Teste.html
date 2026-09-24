@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NewsAgregador</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #e5e5e5;
+        }
+
+        /* =========================
+           LOGIN
+        ========================= */
+
+        #login {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #0a0a0a;
+        }
+
+        .login-box {
+            width: 360px;
+            padding: 40px;
+
+            background: #111;
+
+            border: 1px solid #292929;
+            border-radius: 10px;
+
+            box-shadow: 0 10px 40px #000;
+        }
+
+        .login-box h1 {
+            margin-bottom: 10px;
+
+            color: #fff;
+            font-size: 28px;
+        }
+
+        .login-box p {
+            margin-bottom: 30px;
+
+            color: #888;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 15px;
+
+            background: #181818;
+            color: white;
+
+            border: 1px solid #333;
+            border-radius: 6px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #666;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            background: #fff;
+            color: #000;
+
+            border: none;
+            border-radius: 6px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ccc;
+        }
+
+
+        /* =========================
+           SISTEMA
+        ========================= */
+
+        #sistema {
+            display: none;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+
+            z-index: 10;
+
+            padding: 18px 40px;
+
+            background: #0d0d0d;
+
+            border-bottom: 1px solid #292929;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: white;
+        }
+
+        .usuario {
+            color: #888;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           XP
+        ========================= */
+
+        .xp-area {
+            max-width: 1000px;
+
+            margin: 30px auto;
+
+            padding: 0 20px;
+        }
+
+        .xp-topo {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+        }
+
+        .nivel {
+            color: white;
+
+            font-weight: bold;
+        }
+
+        .xp {
+            color: #888;
+        }
+
+        .barra {
+            height: 8px;
+
+            background: #252525;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .barra-xp {
+            width: 0%;
+
+            height: 100%;
+
+            background: #fff;
+
+            transition: width .4s ease;
+        }
+
+
+        /* =========================
+           MENU
+        ========================= */
+
+        .menu {
+            max-width: 1000px;
+
+            margin: 30px auto;
+
+            padding: 0 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 12px;
+        }
+
+        .opcao {
+            min-height: 100px;
+
+            padding: 20px;
+
+            background: #111;
+
+            border: 1px solid #292929;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+        .opcao:hover {
+            background: #181818;
+
+            border-color: #555;
+
+            transform: translateY(-2px);
+        }
+
+        .opcao h3 {
+            color: #fff;
+
+            margin-bottom: 8px;
+
+            font-size: 15px;
+        }
+
+        .opcao p {
+            color: #666;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
+
+        .conteudo {
+            max-width: 1000px;
+
+            margin: auto;
+
+            padding: 20px;
+        }
+
+        .titulo {
+            margin-bottom: 30px;
+        }
+
+        .titulo h2 {
+            color: white;
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+        .titulo p {
+            color: #777;
+        }
+
+
+        /* =========================
+           NOTÍCIAS
+        ========================= */
+
+        .noticia {
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            background: #111;
+
+            border: 1px solid #252525;
+
+            border-radius: 8px;
+        }
+
+        .noticia h3 {
+            color: white;
+
+            margin-bottom: 12px;
+        }
+
+        .noticia p {
+            color: #999;
+
+            line-height: 1.7;
+        }
+
+        .categoria {
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            color: #777;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================
+           PÁGINAS INTERNAS
+        ========================= */
+
+        .pagina {
+            display: none;
+
+            max-width: 1000px;
+
+            margin: 40px auto;
+
+            padding: 20px;
+        }
+
+        .pagina h2 {
+            color: white;
+
+            margin-bottom: 20px;
+        }
+
+        .voltar {
+            width: auto;
+
+            margin-bottom: 25px;
+
+            padding: 10px 20px;
+
+            background: #222;
+
+            color: white;
+
+            border: 1px solid #333;
+        }
+
+        .voltar:hover {
+            background: #333;
+        }
+
+
+        /* =========================
+           COMENTÁRIOS
+        ========================= */
+
+        .comentario {
+            background: #111;
+
+            border: 1px solid #292929;
+
+            padding: 20px;
+
+            margin-bottom: 15px;
+
+            border-radius: 8px;
+        }
+
+        .comentario strong {
+            color: white;
+        }
+
+        .comentario p {
+            margin-top: 8px;
+
+            color: #999;
+        }
+
+        textarea {
+            width: 100%;
+
+            min-height: 120px;
+
+            padding: 15px;
+
+            background: #111;
+
+            color: white;
+
+            border: 1px solid #333;
+
+            border-radius: 6px;
+
+            resize: vertical;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* =========================
+           CONQUISTAS
+        ========================= */
+
+        .conquista {
+            padding: 20px;
+
+            margin-bottom: 12px;
+
+            background: #111;
+
+            border: 1px solid #292929;
+
+            border-radius: 8px;
+        }
+
+        .conquista h3 {
+            color: white;
+
+            margin-bottom: 5px;
+        }
+
+        .conquista p {
+            color: #777;
+        }
+
+
+        /* =========================
+           FINAL DA PÁGINA
+        ========================= */
+
+        #final {
+            padding: 100px 20px;
+
+            text-align: center;
+
+            color: #555;
+        }
+
+        #mensagem-xp {
+            display: none;
+
+            margin-top: 20px;
+
+            color: white;
+
+            font-size: 18px;
+        }
+
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .menu {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .menu {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<section id="login">
+
+    <div class="login-box">
+
+        <h1>NewsAgregador</h1>
+
+        <p>
+            Entre para acessar as notícias.
+        </p>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="E-mail"
+        >
+
+        <input
+            type="password"
+            id="senha"
+            placeholder="Senha"
+        >
+
+        <button onclick="entrar()">
+            Entrar
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     SISTEMA
+========================= -->
+
+<section id="sistema">
+
+
+    <header>
+
+        <div class="logo">
+            NewsAgregador
+        </div>
+
+        <div class="usuario">
+            Usuário conectado
+        </div>
+
+    </header>
+
+
+
+    <!-- XP -->
+
+    <div class="xp-area">
+
+        <div class="xp-topo">
+
+            <span class="nivel">
+                Nível <span id="nivel">1</span>
+            </span>
+
+            <span class="xp">
+                <span id="xp">0</span> / 100 XP
+            </span>
+
+        </div>
+
+        <div class="barra">
+
+            <div
+                class="barra-xp"
+                id="barraXP">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         CINCO OPÇÕES
+    ========================= -->
+
+    <nav class="menu">
+
+
+        <!-- GITHUB -->
+
+        <div
+            class="opcao"
+            onclick="abrirGitHub()">
+
+            <h3>
+                Repositório
+            </h3>
+
+            <p>
+                Acessar o projeto no GitHub
+            </p>
+
+        </div>
+
+
+        <!-- COMENTÁRIOS -->
+
+        <div
+            class="opcao"
+            onclick="abrirPagina('comentarios')">
+
+            <h3>
+                Comentários
+            </h3>
+
+            <p>
+                Compartilhe sua opinião
+            </p>
+
+        </div>
+
+
+        <!-- CONQUISTAS -->
+
+        <div
+            class="opcao"
+            onclick="abrirPagina('conquistas')">
+
+            <h3>
+                Conquistas
+            </h3>
+
+            <p>
+                Veja seu progresso
+            </p>
+
+        </div>
+
+
+        <!-- NOTÍCIAS -->
+
+        <div
+            class="opcao"
+            onclick="abrirPagina('noticias')">
+
+            <h3>
+                Notícias
+            </h3>
+
+            <p>
+                Notícias semelhantes
+            </p>
+
+        </div>
+
+
+        <!-- VAZIO -->
+
+        <div
+            class="opcao"
+            onclick="abrirPagina('vazio')">
+
+            <h3>
+                Em breve
+            </h3>
+
+            <p>
+                Novas funcionalidades
+            </p>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================= -->
+
+    <main
+        class="conteudo"
+        id="conteudoPrincipal">
+
+        <div class="titulo">
+
+            <h2>
+                Notícias
+            </h2>
+
+            <p>
+                Conteúdos selecionados para você.
+            </p>
+
+        </div>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Tecnologia
+            </span>
+
+            <h3>
+                Novas tecnologias transformam o mercado
+            </h3>
+
+            <p>
+                O avanço da tecnologia está modificando
+                a maneira como empresas e usuários
+                consomem informação.
+            </p>
+
+        </article>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Ciência
+            </span>
+
+            <h3>
+                Pesquisadores apresentam novas descobertas
+            </h3>
+
+            <p>
+                Novos estudos apresentam resultados
+                importantes para o desenvolvimento científico.
+            </p>
+
+        </article>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Economia
+            </span>
+
+            <h3>
+                Mercado acompanha novas mudanças
+            </h3>
+
+            <p>
+                Especialistas analisam as recentes
+                mudanças no mercado.
+            </p>
+
+        </article>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Esportes
+            </span>
+
+            <h3>
+                Principais acontecimentos do esporte
+            </h3>
+
+            <p>
+                Confira os principais acontecimentos
+                esportivos.
+            </p>
+
+        </article>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Cultura
+            </span>
+
+            <h3>
+                Eventos culturais movimentam cidades
+            </h3>
+
+            <p>
+                Eventos, exposições e novas produções
+                culturais ganham destaque.
+            </p>
+
+        </article>
+
+
+        <!-- FINAL DA PÁGINA -->
+
+        <div id="final">
+
+            <p>
+                Você chegou ao final da página.
+            </p>
+
+            <div id="mensagem-xp">
+
+                +25 XP adicionados à sua conta.
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         COMENTÁRIOS
+    ========================= -->
+
+    <section
+        class="pagina"
+        id="comentarios">
+
+        <button
+            class="voltar"
+            onclick="voltar()">
+
+            Voltar
+
+        </button>
+
+        <h2>
+            Comentários
+        </h2>
+
+
+        <textarea
+            id="novoComentario"
+            placeholder="Escreva um comentário...">
+        </textarea>
+
+
+        <button
+            onclick="adicionarComentario()">
+
+            Publicar comentário
+
+        </button>
+
+
+        <div
+            id="listaComentarios"
+            style="margin-top: 30px;">
+
+            <div class="comentario">
+
+                <strong>
+                    Usuário
+                </strong>
+
+                <p>
+                    Este agregador ficou muito interessante.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CONQUISTAS
+    ========================= -->
+
+    <section
+        class="pagina"
+        id="conquistas">
+
+        <button
+            class="voltar"
+            onclick="voltar()">
+
+            Voltar
+
+        </button>
+
+        <h2>
+            Conquistas
+        </h2>
+
+
+        <div class="conquista">
+
+            <h3>
+                Primeiro acesso
+            </h3>
+
+            <p>
+                Você acessou o NewsAgregador pela primeira vez.
+            </p>
+
+        </div>
+
+
+        <div class="conquista">
+
+            <h3>
+                Leitor ativo
+            </h3>
+
+            <p>
+                Chegue ao final de uma página de notícias.
+            </p>
+
+        </div>
+
+
+        <div class="conquista">
+
+            <h3>
+                Leitor frequente
+            </h3>
+
+            <p>
+                Continue utilizando o agregador para desbloquear.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         NOTÍCIAS SIMILARES
+    ========================= -->
+
+    <section
+        class="pagina"
+        id="noticias">
+
+        <button
+            class="voltar"
+            onclick="voltar()">
+
+            Voltar
+
+        </button>
+
+        <h2>
+            Notícias
+        </h2>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Tecnologia
+            </span>
+
+            <h3>
+                Inteligência artificial ganha espaço
+            </h3>
+
+            <p>
+                Novas ferramentas de inteligência artificial
+                estão sendo utilizadas em diferentes áreas.
+            </p>
+
+        </article>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Tecnologia
+            </span>
+
+            <h3>
+                Internet recebe novas tecnologias
+            </h3>
+
+            <p>
+                Empresas apresentam novas soluções
+                para usuários da internet.
+            </p>
+
+        </article>
+
+
+        <article class="noticia">
+
+            <span class="categoria">
+                Ciência
+            </span>
+
+            <h3>
+                Pesquisa apresenta novos resultados
+            </h3>
+
+            <p>
+                Pesquisadores divulgaram novos resultados
+                de estudos recentes.
+            </p>
+
+        </article>
+
+    </section>
+
+
+
+    <!-- =========================
+         OPÇÃO VAZIA
+    ========================= -->
+
+    <section
+        class="pagina"
+        id="vazio">
+
+        <button
+            class="voltar"
+            onclick="voltar()">
+
+            Voltar
+
+        </button>
+
+        <h2>
+            Em breve
+        </h2>
+
+    </section>
+
+
+</section>
+
+
+
+<script>
+
+    let xp = 0;
+
+    let nivel = 1;
+
+    let ganhouXP = false;
+
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    function entrar() {
+
+        const email =
+            document.getElementById("email").value;
+
+        const senha =
+            document.getElementById("senha").value;
+
+
+        if (email === "" || senha === "") {
+
+            alert("Preencha todos os campos.");
+
+            return;
+        }
+
+
+        document.getElementById("login")
+            .style.display = "none";
+
+
+        document.getElementById("sistema")
+            .style.display = "block";
+
+
+        window.scrollTo(0, 0);
+
+    }
+
+
+    /* =========================
+       GITHUB
+    ========================= */
+
+    function abrirGitHub() {
+
+        window.open(
+            "https://github.com/epicleal/Modelagem-e-Implementa-o-",
+            "_blank"
+        );
+
+    }
+
+
+    /* =========================
+       ABRIR PÁGINAS
+    ========================= */
+
+    function abrirPagina(pagina) {
+
+        document.getElementById(
+            "conteudoPrincipal"
+        ).style.display = "none";
+
+
+        document.querySelectorAll(".pagina")
+            .forEach(function(elemento) {
+
+                elemento.style.display = "none";
+
+            });
+
+
+        document.getElementById(pagina)
+            .style.display = "block";
+
+
+        window.scrollTo(0, 0);
+
+    }
+
+
+    /* =========================
+       VOLTAR
+    ========================= */
+
+    function voltar() {
+
+        document.querySelectorAll(".pagina")
+            .forEach(function(elemento) {
+
+                elemento.style.display = "none";
+
+            });
+
+
+        document.getElementById(
+            "conteudoPrincipal"
+        ).style.display = "block";
+
+
+        window.scrollTo(0, 0);
+
+    }
+
+
+    /* =========================
+       COMENTÁRIOS
+    ========================= */
+
+    function adicionarComentario() {
+
+        const campo =
+            document.getElementById("novoComentario");
+
+
+        const texto =
+            campo.value.trim();
+
+
+        if (texto === "") {
+
+            return;
+
+        }
+
+
+        const novo =
+            document.createElement("div");
+
+
+        novo.className = "comentario";
+
+
+        novo.innerHTML = `
+            <strong>Você</strong>
+            <p>${texto}</p>
+        `;
+
+
+        document
+            .getElementById("listaComentarios")
+            .appendChild(novo);
+
+
+        campo.value = "";
+
+    }
+
+
+    /* =========================
+       XP AO CHEGAR NO FINAL
+    ========================= */
+
+    window.addEventListener(
+        "scroll",
+        function() {
+
+            if (ganhouXP) {
+
+                return;
+
+            }
+
+
+            const chegouAoFinal =
+                window.innerHeight +
+                window.scrollY >=
+                document.documentElement.scrollHeight - 50;
+
+
+            if (chegouAoFinal) {
+
+                ganhouXP = true;
+
+                adicionarXP(25);
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       ADICIONAR XP
+    ========================= */
+
+    function adicionarXP(valor) {
+
+        xp += valor;
+
+
+        nivel =
+            Math.floor(xp / 100) + 1;
+
+
+        const xpAtual =
+            xp % 100;
+
+
+        document.getElementById("xp")
+            .innerText = xpAtual;
+
+
+        document.getElementById("nivel")
+            .innerText = nivel;
+
+
+        document.getElementById("barraXP")
+            .style.width =
+            xpAtual + "%";
+
+
+        document.getElementById("mensagem-xp")
+            .style.display = "block";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
